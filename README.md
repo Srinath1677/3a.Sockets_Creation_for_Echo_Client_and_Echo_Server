@@ -9,7 +9,52 @@ Sockets Links.
  server .
 4. Send and receive the message using the send function in socket.
 ## PROGRAM
-## OUPUT
+## Client:
+```
+import socket
+  
+  HOST = '127.0.0.1'  
+  PORT = 65432        
+  
+  with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
+      server_socket.bind((HOST, PORT))
+      server_socket.listen()
+  
+      print(f"Server is listening on {HOST}:{PORT}")
+      while True:
+          conn, addr = server_socket.accept()
+          with conn:
+              print(f"Connected by {addr}")
+              while True:
+                  data = conn.recv(1024)
+                  if not data:
+                      break
+                  conn.sendall(data)
+                  print(f"Echoed: {data.decode('utf-8')}")
+```
+## Server:
+```
+import socket
+    
+    HOST = '127.0.0.1'  
+    PORT = 65432  
+    
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+        client_socket.connect((HOST, PORT))
+    
+        message = 'Hello, Server!'
+        client_socket.sendall(message.encode('utf-8'))
+    
+        data = client_socket.recv(1024)
+        print(f"Received echo: {data.decode('utf-8')}")
+```
+## OUTPUT:
+## Client:
+![439247075-4d8f2996-c0ee-4959-80dd-b489b563cc5d](https://github.com/user-attachments/assets/7e0f2e1c-7b07-4c19-beae-4f5dd27fe412)
+## Server:
+![439247214-f596fd68-6530-4187-8159-a49af46918c1](https://github.com/user-attachments/assets/ecd3f884-5a29-41b0-a290-0692e1943523)
+
+
 ## RESULT
 Thus, the python program for creating Echo Client and Echo Server using TCP Sockets Links 
 was successfully created and executed.
